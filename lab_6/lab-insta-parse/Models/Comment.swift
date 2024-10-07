@@ -1,8 +1,8 @@
 //
-//  Post.swift
+//  Comment.swift
 //  lab-insta-parse
 //
-//  Created by Charlie Hieger on 11/29/22.
+//  Created by Tamara Russell on 10/6/24.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ import ParseSwift
 // TODO: Pt 1 - Create Post Parse Object model
 // https://github.com/parse-community/Parse-Swift/blob/3d4bb13acd7496a49b259e541928ad493219d363/ParseSwift.playground/Pages/1%20-%20Your%20first%20Object.xcplaygroundpage/Contents.swift#L33
 
-struct Post: ParseObject {
+struct Comment: ParseObject {
     // These are required by ParseObject
     var objectId: String?
     var createdAt: Date?
@@ -22,9 +22,7 @@ struct Post: ParseObject {
     var originalData: Data?
 
     // Your own custom properties.
-    var caption: String?
+    var text: String?
     var user: User?
-    var imageFile: ParseFile?
-    
-    var comments: [Comment]?
+    var post: Post?
 }

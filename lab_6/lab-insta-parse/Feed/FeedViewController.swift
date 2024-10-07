@@ -27,7 +27,7 @@ class FeedViewController: UIViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.allowsSelection = false
+        tableView.allowsSelection = true
 
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(onPullToRefresh), for: .valueChanged)
@@ -109,6 +109,44 @@ extension FeedViewController: UITableViewDataSource {
         }
         cell.configure(with: posts[indexPath.row])
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        
+           var comment = Comment()
+               comment.text = "This is a random comment"
+        comment.post = post
+        comment.user = User.current
+        
+   
+        //        // Save asynchronously (preferred way) - Performs work on background queue and returns to specified callbackQueue.
+        //        // If no callbackQueue is specified it returns to main queue.
+               comment.save { result in
+                   switch result {
+                   case .success(let savedComment):
+                      print("Comment saved Successfully: \(savedComment)")
+                       
+                       var updatedPost = post
+                       
+                       if updatedPost.comments == nil {
+                           updatedPost.comments = []
+                       }
+                       
+                       updatedPost.comments?.append(savedComment)
+                       
+                       updatedPost.save { result in
+                           switch result {
+                           case.success(let savedPost):
+                               print("Post updated with new comment: \(savedPost)")
+                           case.failure(let error):
+                               print("Error saving post with comment: \(error)")
+                           }
+                       }
+                       
+                    case .failure(let error):
+                       assertionFailure("Error saving Comment: \(error)")
+                   }
+               }
     }
 }
 
