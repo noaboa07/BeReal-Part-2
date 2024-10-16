@@ -32,7 +32,7 @@ Here is a reminder on how to embed Loom videos on GitHub. Feel free to remove th
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+very difficult time trying to implement comment section.
 
 ## License
 
